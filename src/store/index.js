@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import app from './modules/app'
 import user from './modules/user'
 import push from './modules/push'
+import permissionRouters from './modules/permissionRouters'
 
 import getters from './getters'
 import createPersistedState from 'vuex-persistedstate'
@@ -12,7 +13,8 @@ const store = new Vuex.Store({
   modules: {
     app,
     user,
-    push
+    push,
+    permissionRouters
   },
   getters,
   plugins: [createPersistedState({

@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-
+//  登录
 export function login(phone, password) {
   return request({
     url: '/company/api/user/phoneLogin',
@@ -18,6 +18,8 @@ export function login(phone, password) {
 //     params: { token }
 //   })
 // }
+
+//  获取用户信息
 export function getInfo() {
   return request({
     url: '/company/api/user/getUserInfo',
@@ -26,7 +28,14 @@ export function getInfo() {
 }
 export function logout() {
   return request({
-    url: '/user/logout',
-    method: 'post'
+    url: '/company/api/user/logout',
+    method: 'get'
   })
 }
+// export function logout() {
+//   return request({
+//     url: '/user/logout',
+//     method: 'post'
+//   })
+// }
+

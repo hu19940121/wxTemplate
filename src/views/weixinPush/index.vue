@@ -48,6 +48,12 @@
             <el-form-item label="url" prop="url">
               <el-input v-model="form.url"/>
             </el-form-item>
+            <el-form-item label="推送方式" prop="range">
+              <el-radio-group v-model="form.range" >
+                <el-radio :label="1">个人</el-radio>
+                <el-radio :label="2">所有</el-radio>
+              </el-radio-group>
+            </el-form-item>
             <el-form-item>
               <el-button :disabled="btn" :loading="sendLoading" type="primary" @click="onSubmit('form')">推送</el-button>
               <el-button @click="resetForm('form')">重置</el-button>
@@ -81,7 +87,8 @@ export default {
         keyword4: '',
         remark: '',
         url: '',
-        remarkColor: '#409EFF'
+        remarkColor: '#409EFF',
+        range: 1 // 1 个人 2所有
       },
       keyword1Color: '#409EFF',
       keyword2Color: '#409EFF',

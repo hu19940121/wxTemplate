@@ -1,7 +1,9 @@
 import { login, logout, getInfo } from '@/api/login'
+import { addUser } from '@/api/user'
 // import { getToken, setToken, removeToken } from '@/utils/auth'
 // import { getToken, setToken, removeToken } from '@/utils/auth'
-
+import router from '@/router'
+import { DynamicRoutes } from '@/router/DynamicRoutes'
 const user = {
   state: {
     // token: getToken(),
@@ -69,6 +71,11 @@ const user = {
         getInfo().then(response => {
           console.log('response', response)
           commit('SET_USER_INFO', response.data)
+          // 根据用户信息去添加路由
+          console.log('DynamicRoutes', DynamicRoutes)
+          console.log(router.addRoutes)
+
+          router.addRoutes(DynamicRoutes)
           // commit('SET_NAME', data.name)
           // commit('SET_AVATAR', data.avatar)
           resolve(response)
@@ -77,20 +84,38 @@ const user = {
         })
       })
     },
-    // 登出
-    LogOut({ commit, state }) {
+    addUser({ commit }, params) {
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
-          commit('SET_TOKEN', '')
-          commit('SET_ROLES', [])
-          // removeToken()
+        addUser(params).then(() => {
           resolve()
         }).catch(error => {
           reject(error)
         })
       })
     },
-
+    // // 登出
+    // LogOut({ commit, state }) {
+    //   return new Promise((resolve, reject) => {
+    //     logout(state.token).then(() => {
+    //       commit('SET_TOKEN', '')
+    //       commit('SET_ROLES', [])
+    //       // removeToken()
+    //       resolve()
+    //     }).catch(error => {
+    //       reject(error)
+    //     })
+    //   })
+    // },
+    LogOut({ commit, state }) {
+      return new Promise((resolve, reject) => {
+        logout().then(() => {
+          resolve()
+          commit('SET_USER_INFO', {})
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
     // 前端 登出
     FedLogOut({ commit }) {
       return new Promise(resolve => {

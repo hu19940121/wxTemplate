@@ -48,7 +48,10 @@ export const constantRouterMap = [
         path: 'weixinPush',
         name: 'WeixinPush',
         component: () => import('@/views/weixinPush/index'),
-        meta: { title: '微信推送', icon: 'tuisong' }
+        meta: {
+          title: '微信推送',
+          icon: 'tuisong'
+        }
       },
       {
         path: 'useExplain',
@@ -58,6 +61,46 @@ export const constantRouterMap = [
       }
     ]
   },
+  {
+    path: '/weixinConfig',
+    // hidden: true,
+    component: Layout,
+    redirect: '/weixinConfig/weixinConfig',
+    name: 'WeixinConfig',
+    meta: { title: '系统配置', icon: 'weixin' },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'weixinConfig',
+        name: 'WeixinConfig',
+        component: () => import('@/views/weixinConfig/index'),
+        meta: {
+          title: '微信配置',
+          icon: 'tuisong'
+        }
+      }
+    ]
+  },
+  // {
+  //   path: '/user',
+  //   // hidden: true,
+  //   component: Layout,
+  //   redirect: '/user/userList',
+  //   name: 'User',
+  //   meta: { title: '用户', icon: 'weixin' },
+  //   alwaysShow: true,
+  //   children: [
+  //     {
+  //       path: 'userList',
+  //       name: 'UserList',
+  //       component: () => import('@/views/user/userList'),
+  //       meta: {
+  //         title: '用户列表',
+  //         icon: 'tuisong'
+  //       }
+  //     }
+  //   ]
+  // },
   // {
   //   path: '/example',
   //   component: Layout,
@@ -167,8 +210,6 @@ export const constantRouterMap = [
 
 export default new Router({
   // mode: 'history', //后端支持可开
-  // mode: 'history',
-  // base: 'wxTemplate',
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })
