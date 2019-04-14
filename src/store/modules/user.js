@@ -1,16 +1,17 @@
 import { login, logout, getInfo } from '@/api/login'
 import { addUser } from '@/api/user'
+import { setLoginStatus, getLoginStatus } from '@/utils/auth'
+
 // import { getToken, setToken, removeToken } from '@/utils/auth'
 // import { getToken, setToken, removeToken } from '@/utils/auth'
-import router from '@/router'
-import { DynamicRoutes } from '@/router/DynamicRoutes'
 const user = {
   state: {
     // token: getToken(),
     name: '',
     avatar: '',
     roles: [],
-    userInfo: {}
+    userInfo: {},
+    isLogin: getLoginStatus()
   },
 
   mutations: {
@@ -28,6 +29,9 @@ const user = {
     },
     SET_USER_INFO: (state, userInfo) => {
       state.userInfo = userInfo
+    },
+    SET_LOGIN_STATUS: (state, status) => {
+      state.isLogin = status
     }
   },
 
@@ -37,6 +41,8 @@ const user = {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
         login(username, userInfo.password).then(response => {
+          commit('SET_LOGIN_STATUS', true)
+          setLoginStatus(true)
           // const data = response.data
           // setToken('mockToken')
           // commit('SET_TOKEN', data.token)
@@ -69,15 +75,7 @@ const user = {
     GetInfo({ commit }) {
       return new Promise((resolve, reject) => {
         getInfo().then(response => {
-          console.log('response', response)
           commit('SET_USER_INFO', response.data)
-          // 根据用户信息去添加路由
-          console.log('DynamicRoutes', DynamicRoutes)
-          console.log(router.addRoutes)
-
-          router.addRoutes(DynamicRoutes)
-          // commit('SET_NAME', data.name)
-          // commit('SET_AVATAR', data.avatar)
           resolve(response)
         }).catch(error => {
           reject(error)
@@ -86,8 +84,8 @@ const user = {
     },
     addUser({ commit }, params) {
       return new Promise((resolve, reject) => {
-        addUser(params).then(() => {
-          resolve()
+        addUser(params).then((response) => {
+          resolve(response)
         }).catch(error => {
           reject(error)
         })
@@ -111,6 +109,8 @@ const user = {
         logout().then(() => {
           resolve()
           commit('SET_USER_INFO', {})
+          commit('SET_LOGIN_STATUS', false)
+          setLoginStatus(false)
         }).catch(error => {
           reject(error)
         })
@@ -121,7 +121,8 @@ const user = {
       return new Promise(resolve => {
         // commit('SET_TOKEN', '')
         commit('SET_USER_INFO', {})
-
+        commit('SET_LOGIN_STATUS', false)
+        setLoginStatus(false)
         // removeToken()
         resolve()
       })

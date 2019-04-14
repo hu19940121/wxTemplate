@@ -22,7 +22,8 @@ const store = new Vuex.Store({
       // console.log('createPersistedState', val)
       return {
       // 只储存state中的userInfo
-        'user': val.user
+        // 'user': val.user
+        // user: val.user
       }
     }
   })]

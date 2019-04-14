@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+import store from '@/store'
 // in development-env not use lazy-loading, because lazy-loading too many pages will cause webpack hot update too slow. so only in production use lazy-loading;
 // detail: https://panjiachen.github.io/vue-element-admin-site/#/lazy-loading
 
@@ -38,10 +38,10 @@ export const constantRouterMap = [
     }]
   },
   {
-    path: '/weixinPush',
+    path: '/weixin',
     component: Layout,
-    redirect: '/weixinPush/weixinPush',
-    name: 'WeixinPush',
+    redirect: '/weixin/weixinPush',
+    name: 'Weixin',
     meta: { title: '微信', icon: 'weixin' },
     children: [
       {
@@ -62,12 +62,12 @@ export const constantRouterMap = [
     ]
   },
   {
-    path: '/weixinConfig',
+    path: '/systemConfig',
     // hidden: true,
     component: Layout,
-    redirect: '/weixinConfig/weixinConfig',
-    name: 'WeixinConfig',
-    meta: { title: '系统配置', icon: 'weixin' },
+    redirect: '/systemConfig/weixinConfig',
+    name: 'SystemConfig',
+    meta: { title: '系统配置', icon: 'xitongguanli' },
     alwaysShow: true,
     children: [
       {
@@ -76,140 +76,87 @@ export const constantRouterMap = [
         component: () => import('@/views/weixinConfig/index'),
         meta: {
           title: '微信配置',
-          icon: 'tuisong'
+          icon: 'peizhi'
         }
       }
     ]
   },
-  // {
-  //   path: '/user',
-  //   // hidden: true,
-  //   component: Layout,
-  //   redirect: '/user/userList',
-  //   name: 'User',
-  //   meta: { title: '用户', icon: 'weixin' },
-  //   alwaysShow: true,
-  //   children: [
-  //     {
-  //       path: 'userList',
-  //       name: 'UserList',
-  //       component: () => import('@/views/user/userList'),
-  //       meta: {
-  //         title: '用户列表',
-  //         icon: 'tuisong'
-  //       }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/example',
-  //   component: Layout,
-  //   redirect: '/example/table',
-  //   name: 'Example',
-  //   meta: { title: 'Example', icon: 'example' },
-  //   children: [
-  //     {
-  //       path: 'table',
-  //       name: 'Table',
-  //       component: () => import('@/views/table/index'),
-  //       meta: { title: 'Table', icon: 'table' }
-  //     },
-  //     {
-  //       path: 'tree',
-  //       name: 'Tree',
-  //       component: () => import('@/views/tree/index'),
-  //       meta: { title: 'Tree', icon: 'tree' }
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: '/form',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: 'Form',
-  //       component: () => import('@/views/form/index'),
-  //       meta: { title: 'Form', icon: 'form' }
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: '/nested',
-  //   component: Layout,
-  //   redirect: '/nested/menu1',
-  //   name: 'Nested',
-  //   meta: {
-  //     title: 'Nested',
-  //     icon: 'nested'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'menu1',
-  //       component: () => import('@/views/nested/menu1/index'), // Parent router-view
-  //       name: 'Menu1',
-  //       meta: { title: 'Menu1' },
-  //       children: [
-  //         {
-  //           path: 'menu1-1',
-  //           component: () => import('@/views/nested/menu1/menu1-1'),
-  //           name: 'Menu1-1',
-  //           meta: { title: 'Menu1-1' }
-  //         },
-  //         {
-  //           path: 'menu1-2',
-  //           component: () => import('@/views/nested/menu1/menu1-2'),
-  //           name: 'Menu1-2',
-  //           meta: { title: 'Menu1-2' },
-  //           children: [
-  //             {
-  //               path: 'menu1-2-1',
-  //               component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-  //               name: 'Menu1-2-1',
-  //               meta: { title: 'Menu1-2-1' }
-  //             },
-  //             {
-  //               path: 'menu1-2-2',
-  //               component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-  //               name: 'Menu1-2-2',
-  //               meta: { title: 'Menu1-2-2' }
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           path: 'menu1-3',
-  //           component: () => import('@/views/nested/menu1/menu1-3'),
-  //           name: 'Menu1-3',
-  //           meta: { title: 'Menu1-3' }
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       path: 'menu2',
-  //       component: () => import('@/views/nested/menu2/index'),
-  //       meta: { title: 'menu2' }
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: 'external-link',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-  //       meta: { title: 'External Link', icon: 'link' }
-  //     }
-  //   ]
-  // },
 
   { path: '*', redirect: '/404', hidden: true }
 ]
-
-export default new Router({
+// 根据权限动态去匹配的路由
+export const asyncRouterMap = [
+  {
+    path: '/user',
+    // hidden: true,
+    component: Layout,
+    redirect: '/user/userList',
+    name: 'User',
+    meta: { title: '机构', icon: 'jigou' },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'userList',
+        name: 'UserList',
+        component: () => import('@/views/user/userList'),
+        meta: {
+          title: '机构列表',
+          icon: 'jigouliebiao'
+        }
+      }
+    ]
+  }
+]
+const router = new Router({
   // mode: 'history', //后端支持可开
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })
+router.beforeEach((to, from, next) => {
+  if (store.getters.isLogin) { // 判断是否登陆
+    if (to.path === '/login') {
+      next({ path: '/' })
+    } else {
+      if (!store.getters.userInfo.phone) { // 判断当前用户是否已拉取完user_info信息
+        store.dispatch('GetInfo').then(res => { // 拉取info
+          // console.log('GetInfo', res.data)
+          store.dispatch('GenerateRoutes', res.data).then(() => { // 生成可访问的路由表
+            // console.log('store.getters.addRouters', store.getters.addRouters)
+            router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+            next({ path: to.redirectedFrom }) // 先这样写 不知道为什么
+            // next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+          })
+        }).catch(err => {
+          console.log(err)
+        })
+      } else {
+        next() // 当有个人信息 放行
+      }
+    }
+  } else {
+    if (to.path === '/login') { // 如果是登录页面路径，就直接next()
+      next()
+    } else { // 不然就跳转到登录；
+      next('/login')
+    }
+  }
+})
+// router.beforeEach((to, from, next) => {
+
+//   // if (!store.getters.userInfo.phone) { // 判断当前用户是否已拉取完user_info信息
+//   //   store.dispatch('GetInfo').then(res => { // 拉取info
+//   //     console.log('GetInfo', res.data)
+//   //     store.dispatch('GenerateRoutes', res.data).then(() => { // 生成可访问的路由表
+//   //       console.log('store.getters.addRouters', store.getters.addRouters)
+//   //       router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+//   //       next({ path: to.redirectedFrom }) // 先这样写 不知道为什么
+//   //       // next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+//   //     })
+//   //   }).catch(err => {
+//   //     console.log(err)
+//   //   })
+//   // } else {
+//   //   next() // 当有个人信息 放行
+//   // }
+// })
+export default router

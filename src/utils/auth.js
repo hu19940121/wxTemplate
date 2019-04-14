@@ -13,3 +13,10 @@ export function setToken(token) {
 export function removeToken() {
   return Cookies.remove(TokenKey)
 }
+
+export function setLoginStatus(status) {
+  localStorage.setItem('loginStatus', JSON.stringify(status))
+}
+export function getLoginStatus() {
+  return JSON.parse(localStorage.getItem('loginStatus'))
+}

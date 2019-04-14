@@ -9,7 +9,7 @@
       :collapse-transition="false"
       mode="vertical"
     >
-      <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path"/>
+      <sidebar-item v-for="route in routers" :key="route.path" :item="route" :base-path="route.path"/>
       <!-- <sidebar-item v-for="route in routers" :key="route.path" :item="route" :base-path="route.path"/> -->
     </el-menu>
   </el-scrollbar>
@@ -28,10 +28,10 @@ export default {
       'sidebar',
       'routers'
     ]),
-    routes() {
-      // return this.routers
-      return this.$router.options.routes
-    },
+    // routes() {
+    //   // return this.routers
+    //   return this.$router.options.routes
+    // },
     variables() {
       return variables
     },
@@ -40,7 +40,7 @@ export default {
     }
   },
   created() {
-    console.log('ru', this.routers)
+    // console.log('ru', this.routers)
   }
 }
 </script>

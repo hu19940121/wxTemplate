@@ -18,7 +18,7 @@
                 <i style="margin-left:20px;margin-right:10px;" class="el-icon-question"/>
               </el-tooltip>
               <!--eslint-disable-next-line vue/no-parsing-error -->
-              <a target="_blank" href="https://mp.weixin.qq.com/advanced/tmplmsg?action=list&t=tmplmsg/list&token=1993711445&lang=zh_CN">前往选择模板</a>
+              <a target="_blank" href="https://mp.weixin.qq.com/advanced/tmplmsg?action=list&t=tmplmsg/list&token=1993711445&lang=zh_CN">前往选择模板</a>
 
             </el-form-item>
             <el-form-item label="first" prop="first" class="diplayflex">
